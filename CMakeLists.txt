@@ -12,6 +12,7 @@ set( THREADS_PREFER_PTHREAD_FLAG TRUE )
 
 ################ VARIABLES ###########################
 set( KERNEL_FILES src/kernel )
+set( COMS_FILES ${KERNEL_FILES}/coms )
 set( EXCEPTIONS_FILES ${KERNEL_FILES}/exceptions )
 set( REGRESSIONS_FILES ${KERNEL_FILES}/regressions )
 ############# END VARIABLES ############################
@@ -22,12 +23,16 @@ set(
     src/main.hpp
     src/common.hpp
     ${KERNEL_FILES}/common.hpp
+    ${COMS_FILES}/inc/coms.hpp
+    ${COMS_FILES}/inc/abstracts.hpp
     ${EXCEPTIONS_FILES}/inc/exceptions.hpp
     ${REGRESSIONS_FILES}/inc/regressions.hpp
 )
 set(
     IMPLEMENTED_FILES
     src/main.cpp
+    ${COMS_FILES}/src/coms.cpp
+    ${COMS_FILES}/src/abstracts.cpp
     ${EXCEPTIONS_FILES}/src/exceptions.cpp
     ${REGRESSIONS_FILES}/src/regressions.cpp
 )
