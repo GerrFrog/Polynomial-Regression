@@ -6,7 +6,6 @@
  * @date 2022-05-30
  * 
  * @copyright Copyright (c) 2022
- * 
  */
 
 #pragma once
@@ -83,7 +82,7 @@ namespace COMS
              * @param com_dev COM Device path (e.g. /dev/ttyACM1)
              */
             USB(
-                string& com_dev
+                const string& com_dev
             ) : COMS::Abstracts::COM_Abstract(
                     com_dev
                 )
@@ -186,7 +185,7 @@ namespace COMS
              * @param com_dev COM Device path (e.g. /dev/ttyACM0)
              */
             USART(
-                string& com_dev
+                const string& com_dev
             ) : COMS::Abstracts::COM_Abstract(
                     com_dev
                 )

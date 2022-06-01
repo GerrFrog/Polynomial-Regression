@@ -24,4 +24,25 @@ int main(int argc, char *argv[])
         << "Value: " << value << endl
         << "New value: " << polynomial.calculate(value) << endl
     << endl;
+
+    string device = "/dev/ttyACM0";
+    COMS::USART usart_device(device);
+
+    char* read_buf;
+    int size = 32;
+    char write_data[] = "Written data\n\0";
+
+    cout << usart_device.test_connection() << endl;
+
+    usart_device.initialize();
+    usart_device.set_end('\n');
+
+    while (1)
+    {
+        // usart_device.write_data(write_data, sizeof(write_data));
+        read_buf = usart_device.read_data(size);
+        for (int i = 0; i < size; i++)
+            cout << read_buf[i];
+        cout << endl;
+    }
 }
