@@ -38,27 +38,27 @@ namespace COMS::Abstracts
             /**
              * @brief COM Device string (e.g. /dev/ttyACM1)
              */
-            std::string com_dev;
+            string m_com_dev;
 
             /**
              * @brief Termios struct in order to configure the serial port.
              */
-            struct termios tty; // struct termios2 tty
+            struct termios m_tty; // struct termios2 tty
 
             /**
              * @brief Serial port descriptor;
              */
-            int serial_port = 0;
+            int m_serial_port = 0;
 
             /**
              * @brief End char of data. Read/Write while symbol is not met
              */
-            char end_char = '\0';
+            char m_end_char = '\0';
 
             /**
              * @brief Reading buffer.
              */
-            char buf = '\0';
+            char m_buf = '\0';
 
             /**
              * @brief Configure the Serial Port
@@ -71,17 +71,19 @@ namespace COMS::Abstracts
             virtual void connect() = 0;
 
         public:
-            /**
-             * @brief Construct a new com device object
-             */
-            COM_Abstract() = default;
+            COM_Abstract(
+                string& com_dev
+            ) : m_com_dev(com_dev)
+            {
+                memset(&m_tty, 0, sizeof(m_tty));
+            }
 
             /**
              * @brief Destroy the com device object
              */
             virtual ~COM_Abstract()
             { 
-                close(this->serial_port);
+                close(m_serial_port);
             }
 
             /**
@@ -89,17 +91,15 @@ namespace COMS::Abstracts
              * 
              * @param end End symbol for received data. Read/Write while symbol is not met
              */
-            void set_end(char end) { this->end_char = end; }
+            void set_end(char end) { m_end_char = end; }
 
             /**
              * @brief Initialize device and Serial port
              */
             void initialize()
             {
-                this->connect();
-                std::cout << "[+] Serial port successfully connected" << std::endl;
-                this->configure_sp();
-                std::cout << "[+] Serial port successfully configured" << std::endl;
+                connect();
+                configure_sp();
             }
 
             /**
@@ -112,11 +112,9 @@ namespace COMS::Abstracts
             {
                 char read_buffer[size];
 
-                if (read(this->serial_port, &read_buffer, sizeof(read_buffer)) < 0)
-                {
-                    std::cout << "Error reading: " << strerror(errno) << std::endl;
-                    throw std::invalid_argument("");
-                }
+                if (read(m_serial_port, &read_buffer, sizeof(read_buffer)) < 0)
+                    // TODO: Throw error
+                    throw std::invalid_argument("Error reading" + (string)strerror(errno));
 
                 char *p = read_buffer;
 
@@ -135,13 +133,16 @@ namespace COMS::Abstracts
                 char arr[size];
                 for (int i = 0; i < size; i++)
                     arr[i] = data[i];
-                return write(this->serial_port, arr, size - 1);
+                return write(m_serial_port, arr, size - 1);
             }
 
             /**
-             * @brief Test connection
+             * @brief Test connection with device
+             * 
+             * @return true 
+             * @return false 
              */
-            virtual void test_connection() = 0;
+            virtual bool test_connection() = 0;
     };
 }
 
