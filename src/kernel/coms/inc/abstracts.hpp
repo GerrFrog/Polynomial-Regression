@@ -29,10 +29,15 @@ namespace COMS::Abstracts
 {
     /**
      * @brief Abstract class for COM reader
+     * 
+     * @note https://stackoverflow.com/questions/6947413/how-to-open-read-and-write-from-serial-port-in-c
+     * @note https://stackoverflow.com/questions/37944461/linux-reading-data-from-uart
+     * @note https://blog.mbedded.ninja/programming/operating-systems/linux/linux-serial-ports-using-c-cpp/
      */
     class COM_Abstract
     {
     private:
+
     protected:
         /**
          * @brief COM Device string (e.g. /dev/ttyACM1)

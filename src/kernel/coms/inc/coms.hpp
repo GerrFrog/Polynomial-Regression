@@ -114,9 +114,6 @@ namespace COMS
 
     /**
      * @brief USART Device reader
-     * 
-     * @note https://stackoverflow.com/questions/6947413/how-to-open-read-and-write-from-serial-port-in-c
-     * @note https://stackoverflow.com/questions/37944461/linux-reading-data-from-uart
      */
     class USART : 
         virtual public COMS::Abstracts::COM_Abstract

@@ -25,8 +25,9 @@ int main(int argc, char *argv[])
         << "New value: " << polynomial.calculate(value) << endl
     << endl;
 
-    string device = "/dev/ttyACM0";
-    COMS::USART usart_device(device);
+    string device = "/dev/ttyACM1";
+    // COMS::USART usart_device(device);
+    COMS::USB usart_device(device);
 
     char* read_buf;
     int size = 32;
